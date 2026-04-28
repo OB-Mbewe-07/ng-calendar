@@ -1,0 +1,30 @@
+<div class="card m-[1%]">
+  <p-menubar [model]="items">
+    <ng-template #start>
+      <img
+        src="https://img.icons8.com/?size=50&id=8Cm91HvffxFH&format=png&color=000000"
+        alt="Logo"
+        height="40"
+        class="mr-2"
+      />
+      <span class="font-bold text-xl">HolidayApp</span>
+    </ng-template>
+    <ng-template >
+      <ng-template #item let-item let-root="root" >
+        <a pRipple class="flex items-center px-4 py-3 cursor-pointer gap-2">
+          <span>{{ item.label }}</span>
+          <p-badge *ngIf="item.badge" [ngClass]="{ 'ms-auto': !root }" [value]="item.badge" />
+          <span
+            *ngIf="item.shortcut"
+            class="ms-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1"
+            >{{ item.shortcut }}</span
+          >
+          <i
+            *ngIf="item.items"
+            [ngClass]="['ms-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"
+          ></i>
+        </a>
+      </ng-template>
+    </ng-template>
+  </p-menubar>
+</div>
