@@ -8,12 +8,12 @@ export class TaskStoreService {
   readonly totalReminders = computed(() => this.tasksSignal().length);
 
   addTask(task: UserTask) {
-    this.tasksSignal.update(current => [...current, task]);
-    this.saveToLocal(); 
+    this.tasksSignal.update((current) => [...current, task]);
+    this.saveToLocal();
   }
 
   deleteTask(id: string) {
-    this.tasksSignal.update(current => current.filter(t => t.id !== id));
+    this.tasksSignal.update((current) => current.filter((t) => t.id !== id));
     this.saveToLocal();
   }
 

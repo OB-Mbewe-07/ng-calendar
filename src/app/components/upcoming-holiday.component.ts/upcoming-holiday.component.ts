@@ -7,12 +7,13 @@ import { Holiday } from '../../shared/models/data.models';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { BadgeModule } from 'primeng/badge';
+import { AddTaskComponent } from "../add-task.component/add-task.component";
 
 @Component({
   selector: 'app-upcoming',
   templateUrl: './upcoming-holiday.component.html',
   standalone: true,
-  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule],
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule, AddTaskComponent],
 })
 export class DataviewBasicDemo implements OnInit, OnDestroy {
   private holidayApi = inject(HolidayApiService);

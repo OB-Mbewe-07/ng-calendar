@@ -84,12 +84,13 @@
         <div class="flex items-center gap-3">
           <h2 class="font-bold text-xl m-0">{{ currentDate | date: 'MMMM yyyy' }}</h2>
         </div>
-
+        
         <div class="flex gap-2">
           <p-button icon="pi pi-chevron-left" [text]="true" severity="secondary" size="small" />
           <p-button label="Today" [outlined]="true" size="small" severity="secondary" />
           <p-button icon="pi pi-chevron-right" [text]="true" severity="secondary" size="small" />
         </div>
+        <app-add-task></app-add-task>
       </div>
 
       <div class="grid grid-cols-7 text-center">
