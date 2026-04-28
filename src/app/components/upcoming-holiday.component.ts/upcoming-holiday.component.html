@@ -1,5 +1,5 @@
 <div class="flex">
-  <div class="m-[1%] w-full md:w-[30%]">
+  <div class="ml-[1%] mb-[1%] w-full md:w-[30%]">
     <div
       class="bg-surface-0 dark:bg-surface-900 rounded-xl overflow-hidden"
       style="border: 1px solid var(--p-menubar-border-color)"
@@ -72,62 +72,62 @@
       </div>
     </div>
   </div>
-  <div class="m-[1%] flex-1">
-  <div
-    class="rounded-xl overflow-hidden h-full flex flex-col"
-    style="border: 1px solid var(--p-menubar-border-color)"
-  >
+  <div class="ml-[1%] mr-[1%] mb-[1%] flex-1">
     <div
-      class="flex items-center justify-between px-6 py-4"
-      style="border-bottom: 1px solid var(--p-menubar-border-color)"
+      class="rounded-xl overflow-hidden h-full flex flex-col"
+      style="border: 1px solid var(--p-menubar-border-color)"
     >
-      <div class="flex items-center gap-3">
-        <h2 class="font-bold text-xl m-0">{{ currentDate | date: 'MMMM yyyy' }}</h2>
-      </div>
-
-      <div class="flex gap-2">
-        <p-button icon="pi pi-chevron-left" [text]="true" severity="secondary" size="small" />
-        <p-button label="Today" [outlined]="true" size="small" severity="secondary" />
-        <p-button icon="pi pi-chevron-right" [text]="true" severity="secondary" size="small" />
-      </div>
-    </div>
-
-    <div class="grid grid-cols-7 text-center">
-      @for (day of weekdays; track $index) {
-        <div
-          class="py-3 text-xs font-bold text-secondary"
-          style="border-bottom: 1px solid var(--p-menubar-border-color)"
-        >
-          {{ day }}
+      <div
+        class="flex items-center justify-between px-6 py-4"
+        style="border-bottom: 1px solid var(--p-menubar-border-color)"
+      >
+        <div class="flex items-center gap-3">
+          <h2 class="font-bold text-xl m-0">{{ currentDate | date: 'MMMM yyyy' }}</h2>
         </div>
-      }
-    </div>
 
-    <div class="grid grid-cols-7 flex-1">
-      @for (empty of gridPadding; track $index) {
-        <div
-          class=""
-          style="
-            border-bottom: 1px solid var(--p-menubar-border-color);
-            border-right: 1px solid var(--p-menubar-border-color);
-          "
-        ></div>
-      }
+        <div class="flex gap-2">
+          <p-button icon="pi pi-chevron-left" [text]="true" severity="secondary" size="small" />
+          <p-button label="Today" [outlined]="true" size="small" severity="secondary" />
+          <p-button icon="pi pi-chevron-right" [text]="true" severity="secondary" size="small" />
+        </div>
+      </div>
 
-      @for (day of daysInMonth; track $index) {
-        <div
-          class="min-h-[100px] p-3 transition-colors cursor-pointer group"
-          style="
-            border-bottom: 1px solid var(--p-menubar-border-color);
-            border-right: 1px solid var(--p-menubar-border-color);
-          "
-        >
-          <span class="font-semibold">
+      <div class="grid grid-cols-7 text-center">
+        @for (day of weekdays; track $index) {
+          <div
+            class="py-3 text-xs font-bold text-secondary"
+            style="border-bottom: 1px solid var(--p-menubar-border-color)"
+          >
             {{ day }}
-          </span>
-        </div>
-      }
+          </div>
+        }
+      </div>
+
+      <div class="grid grid-cols-7 flex-1">
+        @for (empty of gridPadding; track $index) {
+          <div
+            class=""
+            style="
+              border-bottom: 1px solid var(--p-menubar-border-color);
+              border-right: 1px solid var(--p-menubar-border-color);
+            "
+          ></div>
+        }
+
+        @for (day of daysInMonth; track $index) {
+          <div
+            class="min-h-[100px] p-3 transition-colors cursor-pointer group"
+            style="
+              border-bottom: 1px solid var(--p-menubar-border-color);
+              border-right: 1px solid var(--p-menubar-border-color);
+            "
+          >
+            <span class="font-semibold">
+              {{ day }}
+            </span>
+          </div>
+        }
+      </div>
     </div>
   </div>
-</div>
 </div>
