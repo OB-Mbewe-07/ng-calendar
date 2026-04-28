@@ -1,0 +1,120 @@
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { HolidayApiService } from '../../shared/services/holiday-api.service';
+import { Holiday } from '../../shared/models/data.models';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { BadgeModule } from 'primeng/badge';
+
+@Component({
+  selector: 'app-upcoming',
+  template: `
+    <div class="m-[1%] w-full md:w-[30%]">
+      <div
+        class="bg-surface-0 dark:bg-surface-900 rounded-xl overflow-hidden"
+        style="border: 1px solid var(--p-menubar-border-color)"
+      >
+        <div
+          class="flex items-center gap-3 px-5 py-4 bg-surface-50/50 dark:bg-surface-800/50"
+          style="border-bottom: 1px solid var(--p-menubar-border-color)"
+        >
+          <i class="pi pi-calendar text-primary font-bold"></i>
+          <span class="font-bold text-lg tracking-tight text-surface-900 dark:text-surface-0"
+            >Upcoming Holidays</span
+          >
+        </div>
+
+        <p-dataview #dv [value]="holidays">
+          <ng-template #list let-items>
+            <div class="flex flex-col">
+              <div *ngFor="let item of items; let last = last">
+                <div
+                  pRipple
+                  class="flex items-center px-5 py-4 gap-4 cursor-pointer transition-colors duration-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+                  [style.border-bottom]="!last ? '1px solid var(--p-menubar-border-color)' : 'none'"
+                >
+                  <div
+                    class="w-14 h-14 flex flex-col items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-900 shrink-0 shadow-sm"
+                    style="border: 1px solid var(--p-menubar-border-color)"
+                  >
+                    <span class="text-[10px] font-bold text-primary uppercase tracking-wider">{{
+                      item.date | date: 'MMM'
+                    }}</span>
+                    <span class="text-lg font-bold leading-none">{{ item.date | date: 'dd' }}</span>
+                  </div>
+
+                  <div class="flex flex-col flex-1 min-w-0">
+                    <div
+                      class="text-sm font-semibold text-surface-900 dark:text-surface-0 truncate"
+                    >
+                      {{ item.name }}
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="text-xs font-medium text-secondary">{{
+                        item.weekday.date.name
+                      }}</span>
+                      <p-badge
+                        *ngIf="item.public"
+                        value="Public"
+                        severity="success"
+                        size="small"
+                        styleClass="text-[10px] scale-75 origin-left"
+                      />
+                    </div>
+                  </div>
+                  <i class="pi pi-angle-right text-xs text-surface-400"></i>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataview>
+
+        <div
+          class="p-2 bg-surface-50/50 dark:bg-surface-800/50"
+          style="border-top: 1px solid var(--p-menubar-border-color)"
+        >
+          <p-button
+            label="Explore 2026 Forecast"
+            [link]="true"
+            size="small"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+  `,
+  standalone: true,
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule],
+})
+export class DataviewBasicDemo implements OnInit, OnDestroy {
+  private holidayApi = inject(HolidayApiService);
+  private cdr = inject(ChangeDetectorRef);
+  private subscription = new Subscription();
+  holidays: Holiday[] = [];
+
+  ngOnInit() {
+    this.allHolidays();
+  }
+
+  allHolidays() {
+    this.subscription.add(
+      this.holidayApi.getHolidays('US', 2025).subscribe({
+        next: (data) => {
+          this.holidays = data.holidays.slice(0, 7);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      }),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+}

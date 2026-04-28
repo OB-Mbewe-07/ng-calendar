@@ -23,17 +23,17 @@ export class MenubarTemplateDemo implements OnInit {
         icon: 'pi pi-home',
       },
       {
-        label: 'Projects',
+        label: 'Calendar',
         icon: 'pi pi-search',
         badge: '3',
         items: [
           {
-            label: 'Core',
+            label: 'Months',
             icon: 'pi pi-bolt',
             shortcut: '⌘+S',
           },
           {
-            label: 'Blocks',
+            label: 'Years',
             icon: 'pi pi-server',
             shortcut: '⌘+B',
           },

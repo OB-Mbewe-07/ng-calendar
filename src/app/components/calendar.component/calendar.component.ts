@@ -1,11 +1,13 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HolidayApiService } from '../../shared/services/holiday-api.service';
 import { Subscription } from 'rxjs';
+import { DataviewBasicDemo } from "../upcoming-holiday.component.ts/upcoming-holiday.component";
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
   templateUrl: './calendar.component.html',
+  imports: [DataviewBasicDemo],
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   private holidaysClass = inject(HolidayApiService);
