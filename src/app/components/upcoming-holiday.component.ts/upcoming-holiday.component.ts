@@ -20,8 +20,14 @@ export class DataviewBasicDemo implements OnInit, OnDestroy {
   private subscription = new Subscription();
   holidays: Holiday[] = [];
 
+  currentDate = new Date();
+  daysInMonth: number[] = [];
+  gridPadding: number[] = [];
+  weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
   ngOnInit() {
     this.allHolidays();
+    this.generateCalendar();
   }
 
   allHolidays() {
@@ -36,6 +42,17 @@ export class DataviewBasicDemo implements OnInit, OnDestroy {
         },
       }),
     );
+  }
+
+  generateCalendar() {
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
+
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    this.daysInMonth = Array.from({ length: totalDays }, (_, i) => i + 1);
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    this.gridPadding = Array.from({ length: firstDayIndex }, (_, i) => i);
   }
 
   ngOnDestroy(): void {
