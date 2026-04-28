@@ -28,7 +28,7 @@ export class DataviewBasicDemo implements OnInit, OnDestroy {
     this.subscription.add(
       this.holidayApi.getHolidays('US', 2025).subscribe({
         next: (data) => {
-          this.holidays = data.holidays.slice(0, 7);
+          this.holidays = data.holidays.slice(0, 8);
           this.cdr.detectChanges();
         },
         error: (err) => {
