@@ -1,0 +1,49 @@
+<div class="flex m-[1%]">
+  <div class="flex flex-col h-full overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-3">
+         <i></i>
+        <h2 class="m-0">{{ currentDate | date: 'MMMM yyyy' }}</h2>
+      </div>
+
+      <div class="flex gap-2">
+        <p-button />
+        <p-button />
+        <p-button />
+      </div>
+
+    </div>
+    <div class="grid grid-cols-7 text-center">
+      @for (day of weekdays; track day) {
+        <div class="py-3">{{ day }}</div>
+      }
+    </div>
+
+    <div class="grid grid-cols-7 flex-1">
+      @for (empty of gridPadding; track $index) {
+        <div></div>
+      }
+
+      @for (day of daysInMonth; track day) {
+        <div class="min-h-[100px] p-3 cursor-pointer group">
+
+
+          <span>{{ day }}</span>
+
+
+          @if (day === 27) {
+            <div class="mt-2">
+              <div class="p-1 rounded border-l-2">Freedom Day</div>
+            </div>
+          }
+
+        </div>
+      }
+
+    </div>
+
+
+  </div>
+
+
+</div>
