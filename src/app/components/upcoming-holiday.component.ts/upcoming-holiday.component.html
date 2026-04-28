@@ -14,7 +14,7 @@
         >
       </div>
 
-      <p-dataview #dv [value]="holidays">
+      <p-dataview #dv [value]="holidays.slice(0,8)">
         <ng-template #list let-items>
           <div class="flex flex-col">
             <div *ngFor="let item of items; let last = last">

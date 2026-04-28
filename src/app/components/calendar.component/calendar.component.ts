@@ -8,7 +8,7 @@ import { CalendarGridCompnent } from "../calendar-grid/calendar-grid.component";
   selector: 'app-calendar',
   standalone: true,
   templateUrl: './calendar.component.html',
-  imports: [DataviewBasicDemo, CalendarGridCompnent],
+  imports: [DataviewBasicDemo],
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   private holidaysClass = inject(HolidayApiService);
