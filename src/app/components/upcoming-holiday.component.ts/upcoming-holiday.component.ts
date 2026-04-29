@@ -42,8 +42,7 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
       this.holidayApi.getHolidays('US', 2025).subscribe({
         next: (data) => {
           this.holidays = data.holidays;
-          this.watchTasks()
-          this.generateCalendar();
+          this.watchTasks();
           this.cdr.detectChanges();
         },
         error: (err) => {

@@ -8,17 +8,34 @@ import { CommonModule } from '@angular/common';
 import { Holiday } from '../../shared/models/data.models';
 import { BadgeModule } from 'primeng/badge';
 import { RouterLink } from '@angular/router';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   standalone: true,
   selector: 'app-task-managment',
   templateUrl: './task-management.component.html',
-  imports: [ButtonModule, DataViewModule, TagModule, FormsModule, CommonModule, BadgeModule, RouterLink],
+  imports: [
+    ButtonModule,
+    DataViewModule,
+    TagModule,
+    FormsModule,
+    CommonModule,
+    BadgeModule,
+    RouterLink,
+    ToggleSwitchModule,
+  ],
 })
 export class TaskManagementComponent implements OnInit {
   store = inject(TaskStoreService);
   HolidaysPerMonth: Holiday[] = [];
+  checked: boolean = false;
   ngOnInit(): void {
-    this.HolidaysPerMonth = this.store.HolidaysfilteredByMonth();
+    this.isChecked();
+  }
+
+  isChecked(){
+    this.HolidaysPerMonth = this.checked
+        ? this.store.HolidaysfilteredByMonth()
+        : this.store.HolidaysfilteredByMonth().filter((day) => day.isTask);
   }
 }
