@@ -1,5 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, WritableSignal } from '@angular/core';
 import { UserTask } from '../models/tasks.models';
+import { Holiday } from '../models/data.models';
 
 @Injectable({ providedIn: 'root' })
 export class TaskStoreService {
@@ -8,6 +9,10 @@ export class TaskStoreService {
     { id: '2', title: 'Project Deadline', date: '2025-04-15', category: 'work' },
     { id: '3', title: 'Client Review', date: '2025-04-22', category: 'work' }
   ]);
+
+  private filteredPerMonthSignal = signal<Holiday[]>([]);
+
+  readonly HolidaysfilteredByMonth = this.filteredPerMonthSignal.asReadonly();
   readonly tasks = this.tasksSignal.asReadonly();
   readonly totalReminders = computed(() => this.tasksSignal().length);
 
@@ -28,5 +33,13 @@ export class TaskStoreService {
   loadFromLocal() {
     const data = localStorage.getItem('my_tasks');
     if (data) this.tasksSignal.set(JSON.parse(data));
+  }
+
+  setFilteredHolidays(array: Holiday[]){
+    this.filteredPerMonthSignal.set(array);
+  }
+
+  getFilteredHolidays(): WritableSignal<Holiday[]>{
+    return this.filteredPerMonthSignal
   }
 }

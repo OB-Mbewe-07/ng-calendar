@@ -11,12 +11,13 @@ import { AddTaskComponent } from '../add-task.component/add-task.component';
 import { TaskStoreService } from '../../shared/store/tasks.store';
 import { UserTask } from '../../shared/models/tasks.models';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-upcoming',
   templateUrl: './upcoming-holiday.component.html',
   standalone: true,
-  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule, AddTaskComponent],
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule, AddTaskComponent, RouterLink],
 })
 export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
   private holidayApi = inject(HolidayApiService);
@@ -89,7 +90,6 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
       if (!this.addedTaskIds.includes(task.id)) {
         this.addedTaskIds.push(task.id);
         this.holidays = [...this.holidays, this.mapTaskToHoliday(task)];
-        console.log(this.mapTaskToHoliday(task));
       }
     }
     this.generateCalendar();
@@ -106,6 +106,7 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
     this.filteredHolidays = this.holidays.filter((day) =>
       day.date.startsWith(`${yearStr}-${monthStr}`),
     );
+    this.store.setFilteredHolidays(this.filteredHolidays);
 
     const totalDays = new Date(year, month + 1, 0).getDate();
     this.daysInMonth = Array.from({ length: totalDays }, (_, i) => i + 1);
