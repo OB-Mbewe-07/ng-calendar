@@ -19,6 +19,7 @@ export interface Holiday {
   country:  string;
   uuid:     string;
   weekday:  Weekday;
+  isTask ?: boolean;
 }
 
 export interface Weekday {
