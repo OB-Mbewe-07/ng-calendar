@@ -101,6 +101,7 @@
             class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm transition-all outline-none"
             style="border: 1px solid var(--p-menubar-border-color)"
             [(ngModel)]="title"
+            [disabled]="isHoliday"
             value="title"
           />
         </div>
@@ -114,6 +115,7 @@
               class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm transition-all outline-none"
               style="border: 1px solid var(--p-menubar-border-color)"
               [(ngModel)]="date"
+              [disabled]="isHoliday"
               value="date"
             />
           </div>
@@ -124,6 +126,7 @@
               class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm outline-none appearance-none cursor-pointer"
               style="border: 1px solid var(--p-menubar-border-color)"
               [(ngModel)]="selectedType"
+              [disabled]="isHoliday"
             >
               <option value="Task">Task</option>
               <option value="Holiday">Holiday</option>
@@ -141,6 +144,7 @@
             placeholder="Add details..."
             class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm outline-none resize-none"
             style="border: 1px solid var(--p-menubar-border-color)"
+            [disabled]="isHoliday"
           ></textarea>
         </div>
       </div>
@@ -149,8 +153,8 @@
         class="p-4 bg-surface-50/30 dark:bg-surface-800/30 flex justify-end gap-3"
         style="border-top: 1px solid var(--p-menubar-border-color)"
       >
-        <p-button label="Cancel" [text]="true" severity="secondary" size="small" (click)="resetForm()" />
-        <p-button label="Save Entry" size="small" icon="pi pi-check" (click)="runUpdate();"/>
+        <p-button [disabled]="isHoliday" label="Cancel" [text]="true" severity="secondary" size="small" (click)="resetForm() " />
+        <p-button [disabled]="isHoliday" label="Save Entry" size="small" icon="pi pi-check" (click)="runUpdate();"/>
       </div>
     </div>
   </div>

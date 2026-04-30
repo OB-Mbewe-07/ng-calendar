@@ -56,7 +56,7 @@ export class TaskManagementComponent implements OnInit {
   isTask: boolean | undefined = undefined;
   selectedType: string = '';
   currentTask: Holiday | null = null;
-
+  isHoliday: boolean = false;
   addNewValue: boolean = true;
   getTask(task: Holiday) {
     this.currentTask = task;
@@ -66,6 +66,7 @@ export class TaskManagementComponent implements OnInit {
     this.isTask = task.isTask;
     this.selectedType = this.isTask ? 'Task' : task.public ? 'Public' : 'Holiday';
     this.addNewValue = false;
+    this.isHoliday = task.isTask ? false : true;
   }
 
   resetForm() {
@@ -73,6 +74,7 @@ export class TaskManagementComponent implements OnInit {
     this.title = '';
     this.date = '';
     this.isTask = undefined;
+    this.isHoliday = false;
     this.selectedType = '';
     this.addNewValue = true;
   }
@@ -100,9 +102,11 @@ export class TaskManagementComponent implements OnInit {
   }
 
   runDelete() {
-    this.store.deleteTask(this.id);
-    this.HolidaysPerMonth = this.HolidaysPerMonth.filter((task) => task.uuid !== this.id);
-    this.resetForm();
+    if (!this.isHoliday) {
+      this.store.deleteTask(this.id);
+      this.HolidaysPerMonth = this.HolidaysPerMonth.filter((task) => task.uuid !== this.id);
+      this.resetForm();
+    }
   }
 
   runUpdate() {
