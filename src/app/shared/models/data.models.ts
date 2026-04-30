@@ -20,6 +20,7 @@ export interface Holiday {
   uuid:     string;
   weekday:  Weekday;
   isTask ?: boolean;
+  description ?: boolean;
 }
 
 export interface Weekday {
