@@ -1,3 +1,4 @@
+<p-toast />
 <div class="flex">
   <div class="ml-[1%] mb-[1%] w-full md:w-[30%]">
     <div
@@ -10,7 +11,7 @@
       >
         <i class="pi pi-calendar text-primary font-bold"></i>
         <span class="font-bold text-lg tracking-tight text-surface-900 dark:text-surface-0"
-          >Upcoming Holidays</span
+          >Holidays This Month</span
         >
       </div>
 
@@ -146,7 +147,7 @@
 
             @if (getHolidayForDay(day).length > 0) {
               <div class="mt-2 flex flex-col gap-1">
-                @for (holiday of getHolidayForDay(day).slice(0,3); track holiday.uuid) {
+                @for (holiday of getHolidayForDay(day).slice(0, 3); track holiday.uuid) {
                   <div
                     class="text-[10px] p-1 rounded border-l-2 truncate font-medium"
                     [ngClass]="

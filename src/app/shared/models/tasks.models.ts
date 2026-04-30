@@ -3,4 +3,5 @@ export interface UserTask {
   title: string;
   date: string;
   category: string;
+  isDone ?: boolean;
 }

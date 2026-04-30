@@ -58,6 +58,7 @@ export class TaskManagementComponent implements OnInit {
   currentTask: Holiday | null = null;
   isHoliday: boolean = false;
   addNewValue: boolean = true;
+  isDone : boolean | undefined = false;
   getTask(task: Holiday) {
     this.currentTask = task;
     this.id = task.uuid;
@@ -67,6 +68,7 @@ export class TaskManagementComponent implements OnInit {
     this.selectedType = this.isTask ? 'Task' : task.public ? 'Public' : 'Holiday';
     this.addNewValue = false;
     this.isHoliday = task.isTask ? false : true;
+    this.isDone = task.isDone;
   }
 
   resetForm() {
@@ -77,6 +79,7 @@ export class TaskManagementComponent implements OnInit {
     this.isHoliday = false;
     this.selectedType = '';
     this.addNewValue = true;
+    this.isDone = false;
   }
 
   private mapTaskToHoliday(task: UserTask): Holiday {
@@ -98,6 +101,7 @@ export class TaskManagementComponent implements OnInit {
         },
       },
       isTask: true,
+      isDone: task.isDone,
     };
   }
 
@@ -115,6 +119,7 @@ export class TaskManagementComponent implements OnInit {
       title: this.title,
       date: this.date,
       category: this.selectedType,
+      isDone: this.isDone
     };
 
     if (this.currentTask && !this.addNewValue) {
@@ -122,12 +127,17 @@ export class TaskManagementComponent implements OnInit {
       this.HolidaysPerMonth = this.HolidaysPerMonth.map((task) =>
         task.uuid === this.id ? { ...this.mapTaskToHoliday(convertedTask) } : task,
       );
+      
+      this.getTask(this.mapTaskToHoliday(convertedTask));
+
+      this.resetForm();
     } else if (this.title && this.date && this.selectedType && this.addNewValue) {
       convertedTask = {
         id: this.id + 1,
         title: this.title,
         date: this.date,
         category: this.selectedType,
+        isDone: this.isDone,
       };
 
       this.store.addTask(convertedTask);

@@ -25,6 +25,7 @@ export class TaskStoreService {
     { id: '18', title: 'Performance Reviews', date: '2025-10-09', category: 'work' },
     { id: '19', title: 'Year End Planning', date: '2025-11-14', category: 'work' },
     { id: '20', title: 'Christmas Party', date: '2025-12-19', category: 'personal' },
+    { id: '21', title: 'Seminar', date: '2025-04-30', category: 'personal' },
   ]);
 
   private filteredPerMonthSignal = signal<Holiday[]>([]);

@@ -87,7 +87,11 @@
         <span class="font-bold text-lg tracking-tight text-surface-900 dark:text-surface-0"
           >Create New Entry</span
         >
-        <i class="pi pi-trash ml-auto text-(--p-red-500)" style="font-size: 1.1rem" (click)="runDelete()"></i>
+        <i
+          class="pi pi-trash ml-auto text-(--p-red-500)"
+          style="font-size: 1.1rem"
+          (click)="runDelete()"
+        ></i>
       </div>
 
       <div class="p-6 flex flex-col gap-5">
@@ -147,14 +151,36 @@
             [disabled]="isHoliday"
           ></textarea>
         </div>
+
+        <div class="flex items-center gap-2">
+          <p-checkbox
+            [(ngModel)]="isDone"
+            [binary]="true"
+            inputId="size_normal"
+          />
+          <label for="size_normal">Task Completed</label>
+        </div>
       </div>
 
       <div
         class="p-4 bg-surface-50/30 dark:bg-surface-800/30 flex justify-end gap-3"
         style="border-top: 1px solid var(--p-menubar-border-color)"
       >
-        <p-button [disabled]="isHoliday" label="Cancel" [text]="true" severity="secondary" size="small" (click)="resetForm() " />
-        <p-button [disabled]="isHoliday" label="Save Entry" size="small" icon="pi pi-check" (click)="runUpdate();"/>
+        <p-button
+          [disabled]="isHoliday"
+          label="Cancel"
+          [text]="true"
+          severity="secondary"
+          size="small"
+          (click)="resetForm()"
+        />
+        <p-button
+          [disabled]="isHoliday"
+          label="Save Entry"
+          size="small"
+          icon="pi pi-check"
+          (click)="runUpdate()"
+        />
       </div>
     </div>
   </div>

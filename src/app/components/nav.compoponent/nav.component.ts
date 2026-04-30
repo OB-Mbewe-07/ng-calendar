@@ -6,47 +6,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'app-nav',
   templateUrl:'./nav.component.html',
   standalone: true,
-  imports: [AvatarModule, BadgeModule, MenubarModule, InputTextModule, RippleModule, CommonModule],
+  imports: [AvatarModule, BadgeModule, MenubarModule, InputTextModule, RippleModule, CommonModule, Button],
 })
-export class MenubarTemplateDemo implements OnInit {
+export class MenubarTemplateDemo{
   items: MenuItem[] | undefined;
-
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-home',
-      },
-      {
-        label: 'Calendar',
-        icon: 'pi pi-search',
-        badge: '3',
-        items: [
-          {
-            label: 'Months',
-            icon: 'pi pi-bolt',
-            shortcut: '⌘+S',
-          },
-          {
-            label: 'Years',
-            icon: 'pi pi-server',
-            shortcut: '⌘+B',
-          },
-          {
-            separator: true,
-          },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil',
-            shortcut: '⌘+U',
-          },
-        ],
-      },
-    ];
-  }
 }

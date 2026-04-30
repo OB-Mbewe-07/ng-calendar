@@ -11,19 +11,33 @@ import { AddTaskComponent } from '../add-task.component/add-task.component';
 import { TaskStoreService } from '../../shared/store/tasks.store';
 import { UserTask } from '../../shared/models/tasks.models';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-upcoming',
   templateUrl: './upcoming-holiday.component.html',
   standalone: true,
-  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, BadgeModule, AddTaskComponent, RouterLink],
+  imports: [
+    ButtonModule,
+    DataViewModule,
+    TagModule,
+    CommonModule,
+    BadgeModule,
+    AddTaskComponent,
+    RouterLink,
+    ToastModule,
+  ],
+  providers: [MessageService],
 })
 export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
   private holidayApi = inject(HolidayApiService);
   private store = inject(TaskStoreService);
   private cdr = inject(ChangeDetectorRef);
   private subscription = new Subscription();
+  private messageService = inject(MessageService);
+
   private tasks$ = toObservable(this.store.tasks);
   holidays: Holiday[] = [];
   currentDate = new Date();
@@ -43,6 +57,7 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.holidays = data.holidays;
           this.watchTasks();
+          this.checkToday();
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -134,6 +149,41 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
   goToToday() {
     this.currentDate = new Date();
     this.generateCalendar();
+  }
+
+  checkToday() {
+    const adjustedDate = new Date();
+    adjustedDate.setFullYear(adjustedDate.getFullYear() - 1);
+    const today = adjustedDate.toISOString().split('T')[0]; // "2025-04-30"
+
+    const todayItems = this.holidays.filter((item) => item.date === today);
+
+    if (todayItems.length === 0) return;
+
+    todayItems.forEach((item) => {
+      if (item.isTask) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Task Due Today',
+          detail: item.name,
+          life: 5000,
+        });
+      } else if (item.public) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Public Holiday Today',
+          detail: item.name,
+          life: 5000,
+        });
+      } else {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Holiday Today',
+          detail: item.name,
+          life: 5000,
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {
