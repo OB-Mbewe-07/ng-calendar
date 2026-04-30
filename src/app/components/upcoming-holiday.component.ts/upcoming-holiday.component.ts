@@ -163,7 +163,7 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
     todayItems.forEach((item) => {
       if (item.isTask) {
         this.messageService.add({
-          severity: 'warn',
+          severity: 'success',
           summary: 'Task Due Today',
           detail: item.name,
           life: 5000,
@@ -177,7 +177,7 @@ export class UpcomingHolidaysComponent implements OnInit, OnDestroy {
         });
       } else {
         this.messageService.add({
-          severity: 'info',
+          severity: 'success',
           summary: 'Holiday Today',
           detail: item.name,
           life: 5000,
