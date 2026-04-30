@@ -1,0 +1,187 @@
+<div class="flex">
+  <div class="ml-[1%] mb-[1%] w-full md:w-[30%]">
+    <div
+      class="bg-surface-0 dark:bg-surface-900 rounded-xl overflow-hidden"
+      style="border: 1px solid var(--p-menubar-border-color)"
+    >
+      <div
+        class="flex items-center gap-3 px-5 py-4 bg-surface-50/50 dark:bg-surface-800/50"
+        style="border-bottom: 1px solid var(--p-menubar-border-color)"
+      >
+        <i class="pi pi-calendar text-primary font-bold"></i>
+        <span class="font-bold text-lg tracking-tight text-surface-900 dark:text-surface-0"
+          >Upcoming Holidays</span
+        >
+        <div class="ml-auto">
+          <p-toggleswitch [(ngModel)]="checked" (click)="isChecked()" />
+        </div>
+      </div>
+
+      <p-dataview #dv [value]="HolidaysPerMonth">
+        <ng-template #list let-items>
+          <div class="flex flex-col h-[75vh] overflow-y-auto">
+            <div *ngFor="let item of items; let last = last">
+              <div
+                pRipple
+                class="flex items-center max-h-120 overflow-y-auto px-5 py-4 gap-4 cursor-pointer transition-colors duration-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+                [style.border-bottom]="!last ? '1px solid var(--p-menubar-border-color)' : 'none'"
+                (click)="getTask(item)"
+              >
+                <div
+                  class="w-14 h-14 flex flex-col items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-900 shrink-0 shadow-sm"
+                  style="border: 1px solid var(--p-menubar-border-color)"
+                >
+                  <span class="text-[10px] font-bold text-primary uppercase tracking-wider">{{
+                    item.date | date: 'MMM'
+                  }}</span>
+                  <span class="text-lg font-bold leading-none">{{ item.date | date: 'dd' }}</span>
+                </div>
+
+                <div class="flex flex-col flex-1 min-w-0">
+                  <div class="text-sm font-semibold text-surface-900 dark:text-surface-0 truncate">
+                    {{ item.name }}
+                  </div>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="text-xs font-medium text-secondary">{{
+                      item.weekday.date.name
+                    }}</span>
+                    <p-badge
+                      *ngIf="item.public"
+                      value="Public"
+                      severity="success"
+                      size="small"
+                      styleClass="text-[10px] scale-75 origin-left"
+                    />
+                  </div>
+                </div>
+                <i class="pi pi-angle-right text-xs text-surface-400"></i>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataview>
+
+      <div class="p-2" style="border-top: 1px solid var(--p-menubar-border-color)">
+        <p-button
+          label="Back to Calendar"
+          [link]="true"
+          size="small"
+          icon="pi pi-arrow-left"
+          iconPos="left"
+          class="w-full"
+          routerLink="/"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="mr-[1%] ml-[1%] w-full md:w-[40%] flex-1">
+    <div
+      class="bg-surface-0 dark:bg-surface-900 rounded-xl overflow-hidden shadow-sm"
+      style="border: 1px solid var(--p-menubar-border-color)"
+    >
+      <div
+        class="flex items-center gap-3 px-6 py-4 bg-surface-50/50 dark:bg-surface-800/50"
+        style="border-bottom: 1px solid var(--p-menubar-border-color)"
+      >
+        <i class="pi pi-plus-circle text-primary font-bold"></i>
+        <span class="font-bold text-lg tracking-tight text-surface-900 dark:text-surface-0"
+          >Create New Entry</span
+        >
+        <i
+          class="pi pi-trash ml-auto text-(--p-red-500)"
+          style="font-size: 1.1rem"
+          (click)="runDelete()"
+        ></i>
+      </div>
+
+      <div class="p-6 flex flex-col gap-5">
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-bold text-secondary uppercase tracking-wider"
+            >Event Name</label
+          >
+          <input
+            type="text"
+            placeholder="example: Team Offsite"
+            class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm transition-all outline-none"
+            style="border: 1px solid var(--p-menubar-border-color)"
+            [(ngModel)]="title"
+            [disabled]="isHoliday"
+            value="title"
+          />
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex flex-col gap-2 flex-1">
+            <label class="text-xs font-bold text-secondary uppercase tracking-wider">Date</label>
+            <input
+              type="text"
+              placeholder="example: Team Offsite"
+              class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm transition-all outline-none"
+              style="border: 1px solid var(--p-menubar-border-color)"
+              [(ngModel)]="date"
+              [disabled]="isHoliday"
+              value="date"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2 flex-1">
+            <label class="text-xs font-bold text-secondary uppercase tracking-wider">Type</label>
+            <select
+              class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm outline-none appearance-none cursor-pointer"
+              style="border: 1px solid var(--p-menubar-border-color)"
+              [(ngModel)]="selectedType"
+              [disabled]="isHoliday"
+            >
+              <option value="Task">Task</option>
+              <option value="Holiday">Holiday</option>
+              <option value="Public">Public Holiday</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-bold text-secondary uppercase tracking-wider"
+            >Description</label
+          >
+          <textarea
+            rows="3"
+            placeholder="Add details..."
+            class="w-full p-3 rounded-lg bg-surface-0 dark:bg-surface-900 text-sm outline-none resize-none"
+            style="border: 1px solid var(--p-menubar-border-color)"
+            [disabled]="isHoliday"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <p-checkbox
+            [(ngModel)]="isDone"
+            [binary]="true"
+            inputId="size_normal"
+          />
+          <label for="size_normal">Task Completed</label>
+        </div>
+      </div>
+
+      <div
+        class="p-4 bg-surface-50/30 dark:bg-surface-800/30 flex justify-end gap-3"
+        style="border-top: 1px solid var(--p-menubar-border-color)"
+      >
+        <p-button
+          [disabled]="isHoliday"
+          label="Cancel"
+          [text]="true"
+          severity="secondary"
+          size="small"
+          (click)="resetForm()"
+        />
+        <p-button
+          [disabled]="isHoliday"
+          label="Save Entry"
+          size="small"
+          icon="pi pi-check"
+          (click)="runUpdate()"
+        />
+      </div>
+    </div>
+  </div>
+</div>
